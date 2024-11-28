@@ -1,0 +1,79 @@
+# cluster parameters
+controlPlaneNumber: 3
+workersNumber: 2
+
+clusterNetwork:
+  pods:
+    cidrBlocks:
+    - "10.244.0.0/16"
+  services:
+    cidrBlocks:
+    - "10.96.0.0/12"
+  serviceDomain: "cluster.local"
+
+identityRef:
+  name: ""
+  cloudName: ""
+  region: ""
+
+bastion:
+  enabled: false # Enable bastion server for SSH access
+  spec:
+    providerID: "" # Provider ID of the bastion server
+    flavor: "" # Flavor of the bastion server
+    image: # Image of the bastion server
+      filter:
+        name: "" # Name of the image
+
+# Determines whether OpenStack security groups for the cluster will be managed by the OpenStack provider or specfic rules will be provided
+managedSecurityGroups:
+  allowAllInClusterTraffic: false
+
+managedSubnets:
+- cidr: 10.6.0.0/24
+  dnsNameservers:
+  - 8.8.8.8
+
+# Enable/disable external load balancer for the API server
+apiServerLoadBalancer:
+  enabled: true
+
+# If ExternalNetwork is not defined or is empty the controller will use any existing external network as long as there is only one.
+externalNetwork:
+  filter:
+    name: ""
+
+# openstack control plane parameters
+controlplane:
+  sshPublicKey: ""  # SSH public key for accessing nodes
+  providerID: ""  # Unique ID for the instance provider
+  flavor: ""  # OpenStack flavor for instance size
+  image:
+    filter:
+      name: ""  # Name of the image that is available on OpenStack
+  portOpts: []  # Ports to be attached to the server instance
+  securityGroups:
+    - filter:
+        name: "default"  # Name of the security group to filter by (replace with appropriate name)
+        description: ""  # Optional: description for filtering
+        projectID: ""  # Optional: project ID for filtering
+
+# openstack worker parameters
+worker:
+  sshPublicKey: ""  # SSH public key for accessing nodes
+  providerID: ""  # Unique ID for the instance provider
+  flavor: ""  # OpenStack flavor for instance size
+  image:
+    filter:
+      name: ""  # Name of the image that is available on OpenStack
+  portOpts: []  # Ports to be attached to the server instance
+  securityGroups:
+    # - id: ""  # UUID of the security group
+    - filter:
+        name: "default"  # Name of the security group to filter by (replace with appropriate name)
+        description: ""  # Optional: description for filtering
+        projectID: ""  # Optional: project ID for filtering
+
+# K0s parameters
+k0s:
+  version: v1.31.1+k0s.1 # K0s version
