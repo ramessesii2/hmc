@@ -1,0 +1,67 @@
+# cluster parameters
+controlPlaneNumber: 3
+workersNumber: 2
+
+clusterNetwork:
+  pods:
+    cidrBlocks:
+    - "10.244.0.0/16" # cidr for pod network
+  services:
+    cidrBlocks:
+    - "10.96.0.0/12" # cidr for service network
+  serviceDomain: "cluster.local"
+
+clusterIdentity:
+  name: "openstack-cloud-config"
+  cloudName: "openstack"
+  region: "RegionOne"
+
+bastion:
+  enabled: false # Enable bastion server for SSH access
+  spec:
+    flavor: "" # Flavor of the bastion server
+    image: # Image of the bastion server
+      filter:
+        name: "" # Name of the image
+
+# Determines whether OpenStack security groups for the cluster will be managed by the OpenStack provider or specfic rules will be provided
+managedSecurityGroups:
+  allowAllInClusterTraffic: false
+
+managedSubnets:
+- cidr: 10.6.0.0/24
+  dnsNameservers:
+  - 8.8.8.8
+
+# Enable/disable external load balancer for the API server
+apiServerLoadBalancer:
+  enabled: true
+
+# If ExternalNetwork is not defined or is empty the controller will use any existing external network as long as there is only one.
+externalNetwork:
+  filter:
+    name: "public"
+
+# openstack machine parameters
+sshPublicKey: "bnr-vm"  # SSH public key for accessing nodes
+flavor: "m1.medium"  # OpenStack flavor for instance size
+image:
+  filter:
+    name: "ubuntu-2204-kube-v1.30.5"  # Name of the image
+portOpts: []  # Ports to be attached to the server instance
+securityGroups:
+  - filter:
+      name: "default"  # Name of the security group to filter by (replace with appropriate name)
+      description: ""  # Optional: description for filtering
+      projectID: ""  # Optional: project ID for filtering
+
+# K0smotron parameters
+k0smotron:
+  service:
+    type: LoadBalancer # Service type for exposing control plane
+    apiPort: 6443 # API server port
+    konnectivityPort: 8132 # Konnectivity server port
+
+# K0s parameters
+k0s:
+  version: v1.30.5+k0s.0 # K0s version
