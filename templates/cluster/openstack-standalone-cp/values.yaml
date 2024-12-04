@@ -12,9 +12,9 @@ clusterNetwork:
   serviceDomain: "cluster.local"
 
 identityRef:
-  name: ""
-  cloudName: ""
-  region: ""
+  name: "openstack-cloud-config"
+  cloudName: "openstack"
+  region: "RegionOne"
 
 bastion:
   enabled: false # Enable bastion server for SSH access
@@ -41,16 +41,16 @@ apiServerLoadBalancer:
 # If ExternalNetwork is not defined or is empty the controller will use any existing external network as long as there is only one.
 externalNetwork:
   filter:
-    name: ""
+    name: "public"
 
 # openstack control plane parameters
 controlplane:
-  sshPublicKey: ""  # SSH public key for accessing nodes
+  sshPublicKey: "bnr-vm"  # SSH public key for accessing nodes
   providerID: ""  # Unique ID for the instance provider
-  flavor: ""  # OpenStack flavor for instance size
+  flavor: "m1.medium"  # OpenStack flavor for instance size
   image:
     filter:
-      name: ""  # Name of the image that is available on OpenStack
+      name: "ubuntu-2204-kube-v1.30.5"  # Name of the image that is available on OpenStack
   portOpts: []  # Ports to be attached to the server instance
   securityGroups:
     - filter:
@@ -60,12 +60,12 @@ controlplane:
 
 # openstack worker parameters
 worker:
-  sshPublicKey: ""  # SSH public key for accessing nodes
+  sshPublicKey: "bnr-vm"  # SSH public key for accessing nodes
   providerID: ""  # Unique ID for the instance provider
-  flavor: ""  # OpenStack flavor for instance size
+  flavor: "m1.medium"  # OpenStack flavor for instance size
   image:
     filter:
-      name: ""  # Name of the image that is available on OpenStack
+      name: "ubuntu-2204-kube-v1.30.5"  # Name of the image that is available on OpenStack
   portOpts: []  # Ports to be attached to the server instance
   securityGroups:
     # - id: ""  # UUID of the security group
@@ -76,4 +76,4 @@ worker:
 
 # K0s parameters
 k0s:
-  version: v1.31.1+k0s.1 # K0s version
+  version: v1.30.5+k0s.0 # K0s version

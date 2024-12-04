@@ -262,7 +262,7 @@ hmc-deploy: helm
 	$(HELM) upgrade --values $(HMC_VALUES) --reuse-values --install --create-namespace hmc $(PROVIDER_TEMPLATES_DIR)/hmc -n $(NAMESPACE)
 
 .PHONY: dev-deploy
-dev-deploy: ## Deploy HMC helm chart to the K8s cluster specified in ~/.kube/config.
+dev-deploy: yq ## Deploy HMC helm chart to the K8s cluster specified in ~/.kube/config.
 	@$(YQ) eval -i '.image.repository = "$(IMG_REPO)"' config/dev/hmc_values.yaml
 	@$(YQ) eval -i '.image.tag = "$(IMG_TAG)"' config/dev/hmc_values.yaml
 	@if [ "$(REGISTRY_REPO)" = "oci://127.0.0.1:$(REGISTRY_PORT)/charts" ]; then \
@@ -326,7 +326,7 @@ dev-templates: templates-generate
 	$(KUBECTL) -n $(NAMESPACE) apply --force -f $(PROVIDER_TEMPLATES_DIR)/hmc-templates/files/templates
 
 .PHONY: dev-release
-dev-release:
+dev-release: yq
 	@$(YQ) e ".spec.version = \"${VERSION}\"" $(PROVIDER_TEMPLATES_DIR)/hmc-templates/files/release.yaml | $(KUBECTL) -n $(NAMESPACE) apply -f -
 
 .PHONY: dev-aws-creds
