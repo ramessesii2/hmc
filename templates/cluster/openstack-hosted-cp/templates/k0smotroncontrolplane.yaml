@@ -3,12 +3,6 @@ kind: K0smotronControlPlane
 metadata:
   name: {{ include "k0smotroncontrolplane.name" . }}
 spec:
-  replicas: {{ .Values.controlPlaneNumber }}
-  version: {{ .Values.k0s.version | replace "+" "-" }}
-  {{- with .Values.k0smotron.service }}
-  service:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
   controllerPlaneFlags:
   - "--enable-cloud-provider=true"
   - "--debug=true"
@@ -18,10 +12,6 @@ spec:
     metadata:
       name: k0s
     spec:
-      network:
-        provider: calico
-        calico:
-          mode: vxlan
       extensions:
         helm:
           repositories:
@@ -56,3 +46,13 @@ spec:
                   enabled: true
                   name: openstack-cloud-config
                   create: false
+      network:
+        provider: calico
+        calico:
+          mode: vxlan                  
+  replicas: {{ .Values.controlPlaneNumber }}
+  {{- with .Values.k0smotron.service }}
+  service:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}  
+  version: {{ .Values.k0s.version | replace "+" "-" }}
