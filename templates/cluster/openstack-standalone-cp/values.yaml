@@ -45,8 +45,7 @@ externalNetwork:
 
 # openstack control plane parameters
 controlplane:
-  sshPublicKey: "bnr-vm"  # SSH public key for accessing nodes
-  providerID: ""  # Unique ID for the instance provider
+  sshPublicKey: "ramesses-vm"  # SSH public key for accessing nodes
   flavor: "m1.medium"  # OpenStack flavor for instance size
   image:
     filter:
@@ -60,8 +59,7 @@ controlplane:
 
 # openstack worker parameters
 worker:
-  sshPublicKey: "bnr-vm"  # SSH public key for accessing nodes
-  providerID: ""  # Unique ID for the instance provider
+  sshPublicKey: "ramesses-vm"  # SSH public key for accessing nodes
   flavor: "m1.medium"  # OpenStack flavor for instance size
   image:
     filter:

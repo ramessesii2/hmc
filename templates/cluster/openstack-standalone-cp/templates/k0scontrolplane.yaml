@@ -51,7 +51,7 @@ spec:
                   secret:
                     enabled: true
                     name: openstack-cloud-config
-                    create: false 
+                    create: false
         network:
           provider: calico
           calico:
