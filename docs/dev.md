@@ -78,6 +78,24 @@ To properly deploy dev cluster you need to have the following variable set:
 
 - `DEV_PROVIDER` - should be "eks"
 
+### OpenStack Provider Setup
+
+To properly deploy dev cluster you need to have the following variable set:
+
+- `DEV_PROVIDER` - should be "openstack"
+- `OS_AUTH_URL`
+- `OS_PROJECT_ID`
+- `OS_USER_DOMAIN_NAME`
+- `OS_PROJECT_NAME`
+- `OS_PROJECT_DOMAIN_ID`
+- `OS_USERNAME`
+- `OS_PASSWORD`
+- `OS_REGION_NAME`
+- `OS_INTERFACE`
+- `OS_IDENTITY_API_VERSION`
+
+Alternatively, download and source OpenStackRC.sh which would export all the required variables except `DEV_PROVIDER`.
+
 The rest of deployment procedure is the same as for other providers.
 
 ## Deploy HMC
